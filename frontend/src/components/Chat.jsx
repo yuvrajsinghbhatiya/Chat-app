@@ -147,13 +147,13 @@ function Chat({ isDarkTheme, user }) {
         <div
           id="chat-box"
           ref={chatBoxRef} // Attach the ref to the chat messages container
-          className={`flex-grow overflow-y-auto p-4 rounded-xl
+          className={`flex-1 space-x-4 overflow-y-auto rounded-xl 
            ${
              isDarkTheme
                ? "bg-neutral-700 text-white"
                : "bg-gray-200 text-gray-800"
            }`}
-          style={{ maxHeight: "calc(90vh - 8rem)", scrollbarWidth: "none" }}
+          style={{ maxHeight: "calc(90vh - 10rem)", scrollbarWidth: "none" }}
         >
           {messages.map((msg, index) => (
             <div
@@ -163,7 +163,7 @@ function Chat({ isDarkTheme, user }) {
               } mb-2 mr-3`}
             >
               <div
-                className={`px-4 py-2 rounded-xl ${
+                className={`px-2 py-2 rounded-xl ${
                   msg.user === user
                     ? isDarkTheme
                       ? "bg-teal-700 text-white message-right"
