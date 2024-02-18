@@ -11,6 +11,7 @@ function Chat({ isDarkTheme, user }) {
   const [message, setMessage] = useState("");
   const [currentRoom, setCurrentRoom] = useState("general");
   const [rooms, setRooms] = useState(["general"]);
+  const [isMainChatEnabled, setIsMainChatEnabled] = useState(false);
 
   useEffect(() => {
     socket.on("message", (newMessage) => {
@@ -28,16 +29,18 @@ function Chat({ isDarkTheme, user }) {
   }, []);
 
   const sendMessage = () => {
-    if (message.trim() === '') return;
+    if (message.trim() === "") return;
     const newMessage = { text: message, user, timestamp: Date.now() };
-    console.log('newMessage:', newMessage);
-    socket.emit('sendMessage', { message: newMessage});
-    setMessage('');
-    setMessages(prevMessages => [...prevMessages, newMessage]); // Update messages state with the new message
+    console.log("newMessage:", newMessage);
+    socket.emit("sendMessage", { message: newMessage });
+    setMessage("");
+    setMessages((prevMessages) => [...prevMessages, newMessage]); // Update messages state with the new message
   };
 
   useEffect(() => {
-    fetch(`https://whisper-backend-s3nd.onrender.com/getMessages/${currentRoom}`)
+    fetch(
+      `https://whisper-backend-s3nd.onrender.com/getMessages/${currentRoom}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setMessages(data);
@@ -76,6 +79,10 @@ function Chat({ isDarkTheme, user }) {
     }
   };
 
+  const toggleMainChat = () => {
+    setIsMainChatEnabled(!isMainChatEnabled);
+  };
+
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
     const hours = date.getHours();
@@ -106,7 +113,7 @@ function Chat({ isDarkTheme, user }) {
           {rooms.map((room) => (
             <li
               key={room}
-              className={`cursor-pointer ${
+              className={`cursor-pointer capitalize ${
                 room === currentRoom
                   ? "text-blue-500 font-bold"
                   : "text-neutral-700"
@@ -141,11 +148,12 @@ function Chat({ isDarkTheme, user }) {
         <div
           id="chat-box"
           ref={chatBoxRef} // Attach the ref to the chat messages container
-          className={`flex-grow overflow-y-scroll ${
-            isDarkTheme
-              ? "bg-neutral-700 text-white"
-              : "bg-gray-200 text-gray-800"
-          }`}
+          className={`flex-grow overflow-y-auto p-4 rounded-xl
+           ${
+             isDarkTheme
+               ? "bg-neutral-700 text-white"
+               : "bg-gray-200 text-gray-800"
+           }`}
           style={{ maxHeight: "calc(90vh - 8rem)", scrollbarWidth: "none" }}
         >
           {messages.map((msg, index) => (
@@ -174,7 +182,8 @@ function Chat({ isDarkTheme, user }) {
                     }`}
                   >
                     {formatTimestamp(msg.timestamp)}
-                    <span className="ml-2">{msg.user}</span> {/* Display sender's username */}
+                    <span className="ml-2">{msg.user}</span>{" "}
+                    {/* Display sender's username */}
                   </div>
                 </div>
               </div>
@@ -184,14 +193,17 @@ function Chat({ isDarkTheme, user }) {
 
         {/* Message input */}
         <div
-          className={`mt-4 mb-4 rounded-xl ${
+          className={`mt-4 mb-4 rounded-xl  ${
             isDarkTheme ? "bg-neutral-800 text-white" : "bg-white text-gray-700"
           }`}
           style={{
             position: "fixed",
             bottom: 0,
-            width: "75%",
+            width: "50%", 
             padding: "1rem",
+            left: "60%",
+            transform: "translateX(-50%)",
+
           }}
         >
           <div className="flex justify-between">
@@ -201,7 +213,7 @@ function Chat({ isDarkTheme, user }) {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
-              className={`flex-grow  rounded-xl p-2 focus:outline-none ${
+              className={`flex-grow rounded-xl p-2 focus:outline-none ${
                 isDarkTheme
                   ? "bg-neutral-700 text-white "
                   : "border bg-gray-100 text-black"
@@ -214,7 +226,7 @@ function Chat({ isDarkTheme, user }) {
                 isDarkTheme
                   ? "bg-teal-700 text-white"
                   : "bg-blue-500 text-white"
-              } rounded-full px-4 py-2  ml-4 text-md`}
+              } rounded-full px-4 py-2  ml-4 text-md transform hover:scale-110 transition-transform duration-300`}
             >
               <IoMdSend size={24} />
             </button>

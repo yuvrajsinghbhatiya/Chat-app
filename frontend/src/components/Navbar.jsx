@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { FaSun, FaMoon, FaUser } from "react-icons/fa";
+import { FaSun, FaMoon } from "react-icons/fa";
+import avatar from "../images/avatar.png";
+import logo from "../images/logo.png";
 
 function Navbar({ user, profilePic, onLogout, isDarkTheme, setIsDarkTheme }) {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -13,6 +15,9 @@ function Navbar({ user, profilePic, onLogout, isDarkTheme, setIsDarkTheme }) {
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
+    setTimeout(() => {
+      setShowDropdown(false);
+    }, 3000);
   };
 
   return (
@@ -21,14 +26,20 @@ function Navbar({ user, profilePic, onLogout, isDarkTheme, setIsDarkTheme }) {
         isDarkTheme ? "bg-neutral-900" : "bg-white"
       } shadow-xl`}
     >
-      <div className="container mx-auto flex justify-between items-center">
-        <h1
-          className={`text-2xl font-bold ${
-            isDarkTheme ? "text-white" : "text-black"
-          }`}
-        >
-          WHISPER
-        </h1>
+      <div className="container mx-auto flex justify-between items-center px-4">
+        <div className="flex items-center">
+          <img src={logo} alt="Logo" className="mr-2 mt-2" width={32}
+                  height={32} />{" "}
+          
+          <h1
+            className={`text-2xl font-bold ${
+              isDarkTheme ? "text-white" : "text-black"
+            }`}
+          >
+            WHISPER
+          </h1>
+        </div>
+
         <div className="flex space-x-4 items-center">
           <button
             onClick={toggleDarkTheme}
@@ -44,14 +55,17 @@ function Navbar({ user, profilePic, onLogout, isDarkTheme, setIsDarkTheme }) {
             <div className="relative">
               <button
                 onClick={toggleDropdown}
-                className="flex items-center   p-2 rounded-full relative"
+                className="flex items-center p-2 rounded-full relative"
               >
-                <FaUser
+                <img
+                  src={avatar}
+                  alt="User Avatar"
                   width={32}
                   height={32}
-                  className="w-8 h-8 rounded-full mr-2 transform hover:scale-125 transition-transform duration-300"
+                  className="w-8 h-8 rounded-full mr-2 transform hover:scale-110 transition-transform duration-300"
                 />
               </button>
+
               {showDropdown && (
                 <div
                   className={`absolute  w-32 ${
