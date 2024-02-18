@@ -47,7 +47,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-screen">
       <Navbar
         user={user}
         profilePic={profilePic}
@@ -55,7 +55,7 @@ function App() {
         setIsDarkTheme={setIsDarkTheme}
         isDarkTheme={isDarkTheme}
       />
-      <div className="flex flex-grow bg-gray-100">
+      <div className="flex flex-grow ">
         {user ? (
           <Chat
             user={user}

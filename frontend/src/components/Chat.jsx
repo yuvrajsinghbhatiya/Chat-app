@@ -136,24 +136,27 @@ function Chat({ isDarkTheme, user }) {
       </div>
       {/* Main chat area */}
       <div
-        className={`w-full sm:w-3/4 p-4 h-full flex flex-col
-        ${
-          isDarkTheme
-            ? "bg-neutral-700 text-white"
-            : "bg-gray-200 text-gray-700"
-        }`}
+        id="chat-box"
+        ref={chatBoxRef} // Attach the ref to the chat messages container
+        className={`flex-1 overflow-y-auto rounded-xl relative p-2
+         ${
+           isDarkTheme
+             ? "bg-neutral-700 text-white"
+             : "bg-gray-200 text-gray-800"
+         }`}
+        style={{ maxHeight: "calc(95vh - 9rem)", scrollbarWidth: "none" }}
       >
         {/* Chat messages */}
         <div
           id="chat-box"
           ref={chatBoxRef} // Attach the ref to the chat messages container
-          className={`flex-1 space-x-4 overflow-y-auto rounded-xl 
+          className={`flex-1 overflow-y-auto
            ${
              isDarkTheme
                ? "bg-neutral-700 text-white"
                : "bg-gray-200 text-gray-800"
            }`}
-          style={{ maxHeight: "calc(90vh - 10rem)", scrollbarWidth: "none" }}
+          style={{ maxHeight: "calc(90vh - 8rem)", scrollbarWidth: "none" }}
         >
           {messages.map((msg, index) => (
             <div
@@ -163,7 +166,8 @@ function Chat({ isDarkTheme, user }) {
               } mb-2 mr-3`}
             >
               <div
-                className={`px-2 py-2 rounded-xl ${
+                className={`px-4 py-2 rounded-xl 
+                ${
                   msg.user === user
                     ? isDarkTheme
                       ? "bg-teal-700 text-white message-right"
@@ -174,7 +178,7 @@ function Chat({ isDarkTheme, user }) {
                 } ${msg.user !== user ? "ml-2 mt-2" : ""} max-w-md`}
               >
                 <div className="flex flex-col ">
-                  <div className="text-md font-medium">{msg.text}</div>
+                  <div className="text-sm">{msg.text}</div>
                   <div
                     className={`text-xxs text-neutral-400 mt-2 ml-6 text-right ${
                       index === 0 && msg.user === user ? "text-right" : ""
@@ -182,7 +186,6 @@ function Chat({ isDarkTheme, user }) {
                   >
                     {formatTimestamp(msg.timestamp)}
                     <span className="ml-2">{msg.user}</span>{" "}
-                    {/* Display sender's username */}
                   </div>
                 </div>
               </div>
@@ -191,40 +194,28 @@ function Chat({ isDarkTheme, user }) {
         </div>
 
         {/* Message input */}
-        <div
-          className={`mt-4 mb-4 rounded-xl ${
-            isDarkTheme ? "bg-neutral-800 text-white" : "bg-white text-gray-700"
-          }`}
-          style={{
-            width: "100%", 
-            padding: "1rem",
-          }}
-        >
-          <div className="flex justify-between">
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type your message..."
-              className={`flex-grow rounded-xl p-2 focus:outline-none ${
-                isDarkTheme
-                  ? "bg-neutral-700 text-white "
-                  : "border bg-gray-100 text-black"
-              }`}
-            />
-
-            <button
-              onClick={sendMessage}
-              className={`${
-                isDarkTheme
-                  ? "bg-teal-700 text-white"
-                  : "bg-blue-500 text-white"
-              } rounded-full px-4 py-2  ml-4 text-md transform hover:scale-110 transition-transform duration-300`}
-            >
-              <IoMdSend size={24} />
-            </button>
-          </div>
+        <div className="fixed bottom-0 lg:w-1/2 p-3 bg-neutral-800 md:bg-neutral-900 flex justify-between items-center rounded-xl mb-2 m-2">
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Type your message..."
+            className={`flex-1 p-2 rounded-xl
+             ${
+              isDarkTheme
+                ? "bg-neutral-700 text-white "
+                : "border bg-gray-100 text-black"
+            } w-1/2 sm:w-auto`}
+          />
+          <button
+            onClick={sendMessage}
+            className={`ml-4 ${
+              isDarkTheme ? "bg-teal-700" : "bg-blue-500"
+            }  text-white rounded-full px-4 py-2 text-md transform hover:scale-110 transition-transform duration-300 flex-shrink-0`}
+          >
+            <IoMdSend size={24} />
+          </button>
         </div>
       </div>
     </div>
