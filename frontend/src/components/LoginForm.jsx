@@ -11,7 +11,7 @@ function LoginForm({ onLogin, isDarkTheme }) {
         const formData = new FormData();
         formData.append("username", username);
 
-        await fetch("http://localhost:5000/login", {
+        await fetch("https://whisper-backend-s3nd.onrender.com/login", {
           method: "POST",
           body: formData,
         });
