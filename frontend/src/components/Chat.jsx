@@ -194,7 +194,7 @@ function Chat({ isDarkTheme, user }) {
         </div>
 
         {/* Message input */}
-        <div className="fixed bottom-0 lg:w-1/2 p-3 bg-neutral-800 md:bg-neutral-900 flex justify-between items-center rounded-xl mb-2 m-2">
+        <div className={`fixed bottom-0 lg:w-1/2 p-3 ${isDarkTheme ? "bg-neutral-800 md:bg-neutral-900" : "bg-white"} shadow-xl  flex justify-between items-center rounded-xl mb-2 m-2`}>
           <input
             type="text"
             value={message}
