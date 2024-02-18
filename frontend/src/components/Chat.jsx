@@ -138,7 +138,7 @@ function Chat({ isDarkTheme, user }) {
       <div
         id="chat-box"
         ref={chatBoxRef} // Attach the ref to the chat messages container
-        className={`flex-1 overflow-y-auto rounded-xl relative p-2
+        className={`flex-1 overflow-y-auto rounded-xl  p-2
          ${
            isDarkTheme
              ? "bg-neutral-700 text-white"
