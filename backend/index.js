@@ -40,6 +40,17 @@ const userSchema = new mongoose.Schema({
 // Create a model for the user
 const User = mongoose.model("User", userSchema);
 
+
+// Create a message schema
+const messageSchema = new mongoose.Schema({
+  user: String,
+  text: { type: String, required: true }, // Define text as a string type
+  timestamp: { type: Date, default: Date.now }, // Add default value for timestamp
+  room: String,
+});
+
+const Message = mongoose.model("Message", messageSchema);
+
 // Endpoint to save user data upon login
 app.post("/login", async (req, res) => {
   try {
@@ -65,6 +76,51 @@ app.get("/user/:username", async (req, res) => {
   } catch (error) {
     console.error("Error fetching user data:", error);
     res.status(500).json({ error: "Failed to fetch user data" });
+  }
+});
+
+
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("sendMessage", async (data) => {
+    console.log("Received message:", data["message"]);
+    const newMessage = new Message({
+      user: data.message.user,
+      text: data.message.text,
+      timestamp: new Date(),
+      room: "general"
+    });
+
+    await newMessage.save();
+
+    io.to(data.room).emit("message", newMessage);
+  });
+
+  socket.on("joinRoom", (room) => {
+    socket.join(room);
+    console.log(`User joined room: ${room}`);
+  });
+
+  socket.on("leaveRoom", (room) => {
+    socket.leave(room);
+    console.log(`User left room: ${room}`);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
+  });
+});
+
+app.get("/getMessages/:room", async (req, res) => {
+  const room = req.params.room;
+  try {
+    const messages = await Message.find({ room }).sort({ timestamp: 1 }); // Retrieve messages for the specified room sorted by timestamp
+    res.json(messages);
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+    res.status(500).json({ error: "Error fetching messages" });
   }
 });
 

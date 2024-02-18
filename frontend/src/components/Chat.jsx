@@ -4,7 +4,7 @@ import { IoMdSend } from "react-icons/io";
 import PropTypes from "prop-types";
 import io from "socket.io-client";
 
-const socket = io.connect("https://server-twrb.onrender.com");
+const socket = io.connect("http://localhost:5000");
 
 function Chat({ isDarkTheme, user }) {
   const [messages, setMessages] = useState([]);
@@ -30,19 +30,20 @@ function Chat({ isDarkTheme, user }) {
   const sendMessage = () => {
     if (message.trim() === '') return;
     const newMessage = { text: message, user, timestamp: Date.now() };
-    socket.emit('sendMessage', { message: newMessage, room: currentRoom });
+    console.log('newMessage:', newMessage);
+    socket.emit('sendMessage', { message: newMessage});
     setMessage('');
     setMessages(prevMessages => [...prevMessages, newMessage]); // Update messages state with the new message
   };
 
   useEffect(() => {
-    fetch(`https://server-twrb.onrender.com/getMessages/${currentRoom}`)
+    fetch(`http://localhost:5000/getMessages/${currentRoom}`)
       .then((response) => response.json())
       .then((data) => {
         setMessages(data);
       })
       .catch((error) => console.error("Error fetching messages:", error));
-  }, [currentRoom]);
+  });
 
   const joinRoom = (room) => {
     socket.emit("joinRoom", room);

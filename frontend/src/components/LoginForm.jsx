@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 function LoginForm({ onLogin, isDarkTheme }) {
   const [username, setUsername] = useState("");
-  const [profilePic, setProfilePic] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -11,29 +10,20 @@ function LoginForm({ onLogin, isDarkTheme }) {
       try {
         const formData = new FormData();
         formData.append("username", username);
-        formData.append("profilePic", profilePic);
 
         await fetch("http://localhost:5000/login", {
           method: "POST",
           body: formData,
         });
 
-        onLogin(username, profilePic);
+        onLogin(username);
       } catch (error) {
         console.error("Error logging in:", error);
       }
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
-      setProfilePic(file);
-    } else {
-      alert("Please select a valid image file (jpg/png).");
-      e.target.value = null;
-    }
-  };
+  
 
   return (
     <div
@@ -77,25 +67,7 @@ function LoginForm({ onLogin, isDarkTheme }) {
                 : " border bg-gray-100 text-black"
             }`}
           />
-          <label
-            htmlFor="profilePic"
-            className={`block mt-8 ${
-              isDarkTheme ? "text-white" : "text-gray-800"
-            }`}
-          >
-            Choose a Avatar
-          </label>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            accept=".jpg,.jpeg,.png"
-            className={`mt-2 rounded p-2 w-full  ${
-              isDarkTheme
-                ? "bg-neutral-700 text-white"
-                : "bg-gray-200 text-black"
-            } `}
-          />
-
+          
           <button
             type="submit"
             className={`w-full mt-8 rounded py-2 text-lg ${

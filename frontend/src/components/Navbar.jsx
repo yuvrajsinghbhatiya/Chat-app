@@ -46,19 +46,11 @@ function Navbar({ user, profilePic, onLogout, isDarkTheme, setIsDarkTheme }) {
                 onClick={toggleDropdown}
                 className="flex items-center   p-2 rounded-full relative"
               >
-                {profilePic ? (
-                  <img
-                    src={profilePic}
-                    alt="Profile"
-                    className="w-8 h-8 rounded-full mr-2 transform hover:scale-125 transition-transform duration-300"
-                  />
-                ) : (
-                  <FaUser
-                    width={32}
-                    height={32}
-                    className="mr-2 transform hover:scale-125 transition-transform duration-300"
-                  />
-                )}
+                <FaUser
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-full mr-2 transform hover:scale-125 transition-transform duration-300"
+                />
               </button>
               {showDropdown && (
                 <div
