@@ -95,13 +95,13 @@ function Chat({ isDarkTheme, user }) {
 
   return (
     <div
-      className={`w-screen flex ${
+      className={`w-screen flex flex-col sm:flex-row ${
         isDarkTheme ? "bg-neutral-800 text-white" : "bg-gray-100 text-gray-800"
       }`}
     >
       {/* Sidebar */}
       <div
-        className={`w-1/4 p-8 ${
+        className={`w-full sm:w-1/4 p-8 ${
           isDarkTheme
             ? "bg-neutral-800 text-white"
             : "bg-neutral-180 text-gray-700"
@@ -114,9 +114,7 @@ function Chat({ isDarkTheme, user }) {
             <li
               key={room}
               className={`cursor-pointer capitalize ${
-                room === currentRoom
-                  ? "text-blue-500 font-bold"
-                  : "text-neutral-700"
+                room === currentRoom ? "font-bold" : ""
               }`}
               onClick={() =>
                 room === currentRoom ? leaveRoom(room) : joinRoom(room)
@@ -127,7 +125,7 @@ function Chat({ isDarkTheme, user }) {
                   isDarkTheme
                     ? "bg-neutral-700 text-white"
                     : "bg-gray-200 text-black"
-                }  w-full p-2 rounded-lg `}
+                }  w-auto p-2 rounded-lg `}
               >
                 <GoHome className="mr-2" />
                 {room}
@@ -138,7 +136,8 @@ function Chat({ isDarkTheme, user }) {
       </div>
       {/* Main chat area */}
       <div
-        className={`w-full p-4 ${
+        className={`w-full sm:w-3/4 p-4 h-full flex flex-col
+        ${
           isDarkTheme
             ? "bg-neutral-700 text-white"
             : "bg-gray-200 text-gray-700"
@@ -193,17 +192,12 @@ function Chat({ isDarkTheme, user }) {
 
         {/* Message input */}
         <div
-          className={`mt-4 mb-4 rounded-xl  ${
+          className={`mt-4 mb-4 rounded-xl ${
             isDarkTheme ? "bg-neutral-800 text-white" : "bg-white text-gray-700"
           }`}
           style={{
-            position: "fixed",
-            bottom: 0,
-            width: "50%", 
+            width: "100%", 
             padding: "1rem",
-            left: "60%",
-            transform: "translateX(-50%)",
-
           }}
         >
           <div className="flex justify-between">

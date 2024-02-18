@@ -4,7 +4,7 @@ import { FaSun, FaMoon } from "react-icons/fa";
 import avatar from "../images/avatar.png";
 import logo from "../images/logo.png";
 
-function Navbar({ user, profilePic, onLogout, isDarkTheme, setIsDarkTheme }) {
+function Navbar({ user, onLogout, isDarkTheme, setIsDarkTheme }) {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDarkTheme = () => {
@@ -68,7 +68,7 @@ function Navbar({ user, profilePic, onLogout, isDarkTheme, setIsDarkTheme }) {
 
               {showDropdown && (
                 <div
-                  className={`absolute  w-32 ${
+                  className={`absolute right-0 w-32 ${
                     isDarkTheme ? "bg-neutral-800" : "bg-white"
                   }  rounded-lg shadow-lg py-2 `}
                 >

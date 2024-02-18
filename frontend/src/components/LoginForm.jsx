@@ -46,7 +46,7 @@ function LoginForm({ onLogin, isDarkTheme }) {
           <span className="text-sm font-medium text-gray-500"
           >login or signup here</span>
         </h2>
-        <hr className="mb-8 border border-gray-500" />
+        <hr className="mb-6 border border-gray-500" />
         <form onSubmit={handleSubmit}>
         <label
             htmlFor="profilePic"
