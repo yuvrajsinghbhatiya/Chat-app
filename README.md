@@ -1,5 +1,5 @@
-## WHISPER
-- Whisper is a chat app that facilitates real-time conversations, user registration/login, messaging, and features like authentication and message history.
+## Chat App
+- Chat App is a app that facilitates real-time conversations, user registration/login, messaging, and features like authentication and message history.
 
 ## Tech Stack
 
@@ -23,14 +23,14 @@
 1. **Clone the Repository**:
 
    ```bash
-     git clone https://github.com/yvrjbhatiya/Whisper-Chat-App
+     git clone https://github.com/yvrjbhatiya/Chat-App
   
    ```
 
 2. **Install Dependencies:**:
 
     ```bash
-      cd Whisper-Chat-App
+      cd Chat-App
       cd backend
       npm install
       cd ..
@@ -43,14 +43,14 @@
    - In one terminal window/tab, navigate to the backend directory:
      
     ```bash
-        cd Whisper-Chat-App/backend
+        cd Chat-App/backend
         npm start
     ```
     
     - In another terminal window/tab, navigate to the frontend directory:
 
     ```bash
-        cd Whisper-Chat-App/frontend
+        cd Chat-App/frontend
         npm start
     ```
 
